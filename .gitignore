@@ -1,0 +1,5 @@
+/.venv
+/.python-versions
+__pycache__/
+/personalexpenses/db.sqlite3
+/personalexpenses/uploads
