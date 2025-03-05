@@ -12,5 +12,5 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get('request')
         if request and hasattr(request, 'user'):
-            validated_data['user'] = request.user  # Passa o objeto User
+            validated_data['user'] = request.user
         return super().create(validated_data)

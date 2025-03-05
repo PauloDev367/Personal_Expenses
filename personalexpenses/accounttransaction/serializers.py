@@ -16,7 +16,7 @@ class AccountTransactionSerializer(serializers.ModelSerializer):
             'date',
             'description',
         )
-        read_only_fields = ('user_id',)
+        read_only_fields = ('user',)
     
     def create(self, validated_data):
         request = self.context.get('request')
@@ -28,6 +28,3 @@ class AccountTransactionSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({"account": "You dont't have access to use this account."})
             
         return super().create(validated_data)
-    
-    def query_set(self):
-        return AccountTransaction.objects.filter(account__user=self.request.user)
