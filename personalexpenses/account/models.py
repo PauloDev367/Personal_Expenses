@@ -10,4 +10,4 @@ class Base(models.Model):
 class Account(Base):
     name = models.CharField(max_length=255)
     balance = models.FloatField()
-    user_id = models.ForeignKey(User, related_name='account_user_id', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, related_name='account_user_id', on_delete=models.SET_NULL, null=True)

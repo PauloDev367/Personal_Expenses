@@ -14,8 +14,8 @@ class AccountTransactionType(models.TextChoices):
 
 class AccountTransaction(Base):
     type_choices = ('expense', 'income')
-    user_id = models.ForeignKey(User, related_name='account_transactions_user_id', on_delete=models.SET_NULL, null=True)
-    account_id = models.ForeignKey(Account, related_name='account_transactions_account_id', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, related_name='account_transactions_user_id', on_delete=models.SET_NULL, null=True)
+    account = models.ForeignKey(Account, related_name='account_transactions_account_id', on_delete=models.SET_NULL, null=True)
     amount = models.FloatField()
     account_type = models.CharField(
         max_length=30,
