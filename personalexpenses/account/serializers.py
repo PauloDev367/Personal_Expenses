@@ -2,12 +2,12 @@ from rest_framework import serializers
 from .models import Account
 
 class AccountSerializer(serializers.ModelSerializer):
-    user_id = serializers.ReadOnlyField(source="user.id")  # Apenas leitura, pega do usuário autenticado
+    user_id = serializers.ReadOnlyField(source="user.id")
 
     class Meta:
         model = Account
-        fields = ('id', 'name', 'balance', 'user_id')  # user_id não é um campo gravável
-        read_only_fields = ('user_id',)  # Garante que não seja enviado na requisição
+        fields = ('id', 'name', 'balance', 'user_id')
+        read_only_fields = ('user_id',)
 
     def create(self, validated_data):
         request = self.context.get('request')
