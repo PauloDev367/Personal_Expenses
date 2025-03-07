@@ -24,7 +24,16 @@ class AccountTransactionSerializer(serializers.ModelSerializer):
             validated_data['user'] = request.user
             
             account = validated_data.get('account')
+            
+            if account is None:
+                raise serializers.ValidationError({"account": "Account is required."})
+
             if account and account.user != request.user:
                 raise serializers.ValidationError({"account": "You dont't have access to use this account."})
             
+            if validated_data['account_type'] == "income":
+                account.balance += validated_data['amount']            
+            if validated_data['account_type'] == "expense":
+                account.balance -= validated_data['amount']
+            account.save()
         return super().create(validated_data)
