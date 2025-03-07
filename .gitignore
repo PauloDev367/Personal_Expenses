@@ -3,3 +3,4 @@
 __pycache__/
 /personalexpenses/db.sqlite3
 /personalexpenses/uploads
+.env
