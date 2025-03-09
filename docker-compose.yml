@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: personalexpenses_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: personalexpensesdb
+      MYSQL_USER: personalexpensesuser
+      MYSQL_PASSWORD: personalexpensespassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - personalexpenses_network
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: personalexpenses_django
+    command: bash -c "wait-for-it db:3306 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - personalexpenses_network
+    env_file:
+      - .env  # Certifique-se de que o arquivo .env é carregado
+
+networks:
+  personalexpenses_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
